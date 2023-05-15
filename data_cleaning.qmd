@@ -16,10 +16,10 @@ library(tidyverse)
 
 ## Why Learn to Program
 
-There are many reasons to learn to program. Here I will lest what I think are the most compelling reasons why you should learn to program:
+There are many reasons to learn to program. Here are some of the most compelling reasons why I think knowing how to program is valuable:
 
--   By programming (rather than using other tools such as excel) you create instantly repeatable presses which need far less human effort than other tools to update.
--   You carrying out your analysis and describing to others how to run the same analysis are done simultaneously.
+-   By programming (rather than using other tools such as excel) you create instantly repeatable processes which need less human effort than other tools to update.
+-   Carrying out your analysis and describing to others how to run the same analysis are done simultaneously.
 -   The process you use (and describe) is unambiguous and can be adopted and scrutinized by others.
 -   You gain access to many tools and efficiencies that would otherwise be unavailable.
 
@@ -27,17 +27,17 @@ There are many reasons to learn to program. Here I will lest what I think are th
 
 While many programming languages provide many useful tools to for conducting data analysis, R has been designed differently than other programming languages in some important ways:
 
--   While many programming languages build functions around operations on single values, R focuses more on functions that act on entire vectors of values which is quite useful for simplifying code and conducting data analyses.
+-   While many programming languages build functions around operations on single values, R focuses more on functions that act on entire vectors of values which is useful for simplifying code and conducting data analyses.
 -   R has a community that is dedicated to high quality, open source software and is the default language for multiple academic fields.
 
 ## Getting Started in R
 
-I have found much of this authors writing very helpful. The book is online for free at <https://r4ds.had.co.nz/>. Another (free) book that gives more of background on R (and programming languages in general) is [Hands-On Programming with R](https://rstudio-education.github.io/hopr/).
+There are two books I would recommend for getting started with R. The first book book is [R for data science](https://r4ds.had.co.nz/). Another (free) book that gives more of background on R and is friendlier to people new to programming is [Hands-On Programming with R](https://rstudio-education.github.io/hopr/).
 
 ::: {layout-ncol="2"}
-![](https://d33wubrfki0l68.cloudfront.net/b88ef926a004b0fce72b2526b0b5c4413666a4cb/24a30/cover.png){width="50%"}
+![](https://d33wubrfki0l68.cloudfront.net/b88ef926a004b0fce72b2526b0b5c4413666a4cb/24a30/cover.png){width="574"}
 
-![](https://rstudio-education.github.io/hopr/cover.png){width="200%"}
+/
 :::
 
 ## Getting Started in R
@@ -46,7 +46,7 @@ On top of books there are many classes for learning R. I got my start by watchin
 
 ## Getting Started in R
 
-I have heard from other individuals who have recently started learning how to code that [chatGPT](https://chat.openai.com) (or bing or [bard](https://bard.google.com/)). While these sources are not consistently accurate, they can often be a good place to start since they are easy to use and provide answers that are less cryptic than other resources. If an error is appearing you can try copying and pasting your code into the prompt and asking for why the error is appearing.
+I have heard from other individuals who have recently started learning how to code that [chatGPT](https://chat.openai.com) (or bing or [bard](https://bard.google.com/)). While these sources are not consistently accurate, they can often be a good place to start since they are easy to use and provide answers that are less cryptic than other resources. If an error is appearing you can try copying and pasting your code into the prompt and asking why the error is appearing.
 
 ## R and R studio
 
@@ -63,7 +63,8 @@ To read data into R, the "Files" pane can be used:
 ![](https://raw.githubusercontent.com/adam-s-elder/data_cleaning_tutorial_ph/main/import_data_2.png)
 
 ## Reading in data:
-While the graphical user interface is can be used to read in data, in reality Rstudio using the interface to create an R command that is then passed to R.  In our case (instead of the dog dataset), we wish to read in the opioid dataset.  Using the graphical user interface creates multiple commands, the most important of them given here:
+
+While the graphical user interface can be used to read in data, in reality Rstudio using the interface to create an R command that is then passed to R. In our case (instead of the dog dataset), we wish to read in the opioid dataset. Using the graphical user interface creates multiple commands, the most important of them given here:
 
 ```{r}
 #| echo: true
@@ -75,7 +76,6 @@ opioid_data <- read.csv("~/Desktop/file.nosync/opioid_data_05022023.csv")
 When reading and writing data into and from R, it is important to know the directory in which you are working. This tells R where it should look for files. The directory can be set in session \> Set Working Directory \> Choose Directory...
 
 ![](https://raw.githubusercontent.com/adam-s-elder/data_cleaning_tutorial_ph/main/set_wd.png)
-
 
 ## Writing (or saving) data:
 
@@ -90,24 +90,24 @@ write.csv(opioid_data, "~/Desktop/file.nosync/opioid_data_05022023_new.csv")
 
 ## Defining a question
 
-We will be studying the relationship between opioid overdoses and various demographic factors. To do this, we will need clean versions of both the demographic information and the opioid overdose variable.
+We will be studying the relationship between overdoses and various demographic factors. To do this, we will need clean versions of both the demographic variable and the overdose variable.
 
-## Demographic factors
+## Demographic factors (looking at the data)
 
-As an example of a function, `fivenum` provides a five number summary of a vector of values. Here, the `|>` characters tell R that the vector `opioid_data$Age` should be the first argument sent to `fivenum`.
+One of the most powerful features of any programming language is functions. Functions allow for series of operations to be easily recorded and repeated. As an example of a function, `fivenum` provides a five number summary of a vector of values. Here, the `|>` characters tell R that the vector `opioid_data$Age` should be the first argument sent to `fivenum`.
 
 ```{r}
 #| echo: true
-opioid_data$Age |> fivenum()
+fivenum(opioid_data$Age)
 ```
 
 ## Cleaning the race variable
 
-First, we use the `table()` function to show the counts of all possible categories:
+For categorical variables, `fivenum` will return an error because the variable is not numeric. Instead, we can use the `table()` function to show the counts of all possible categories:
 
 ```{r}
 #| echo: true
-opioid_data$c_race |> table(useNA = "always")
+table(opioid_data$c_race, useNA = "always")
 ```
 
 ## Creating a new race variable
@@ -255,6 +255,7 @@ opioid_data$ICD_CCSR_Desc_Flat[3] |>
 ```
 
 ## Splitting character delineated variables
+
 Once a strategy is found for splitting up a single value, the same functions can be used for an entire vector of values
 
 ```{r}
@@ -263,16 +264,6 @@ all_codes <- opioid_data$ICD_CCSR_Desc_Flat
 all_codes[1:3] |> 
   substr(start = 2, stop = str_length(all_codes) - 1) |>
   str_split("(?<=\\S);(?=\\S)")
-```
-
-## Creating an opoid use variable
-
-```{r}
-#| echo: true
-codes <- opioid_data$ICD_CCSR_Desc_Flat[3]
-codes
-codes <- codes |> substr(start = 2, stop = str_length(codes) - 1)
-codes |> str_split("(?<=\\S);(?=\\S)")
 ```
 
 # A brief data analysis
